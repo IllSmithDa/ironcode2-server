@@ -1,5 +1,6 @@
-const { User } = require("../models/user");
+
 const bcrypt = require('bcrypt');
+const { User } = require('../models/Users');
 
 //https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
 const saltRounds = 10;
