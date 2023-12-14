@@ -37,7 +37,7 @@ class Language {
     try {
       const query = {
         text: `
-          SELECT * FROM languages
+          SELECT * FROM languages ORDER BY name
         `,
       }
       const res = await client.query(query);
