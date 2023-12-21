@@ -44,9 +44,9 @@ const getAllTopics = async (req, res) => {
 
 const updateTopic = async (req, res) => {
   try {
-    const {name, description, topicId} = req.body;
-    // console.log(topicId)
-    const response = await ConceptTopic.updateTopic(name, description, topicId);
+    const {name, description, topicId, rank, category} = req.body;
+    console.log(rank)
+    const response = await ConceptTopic.updateTopic(name, description, topicId, Number(rank), category);
     if (response.success) {
       res.status(200).json({ success: true})
     }

@@ -61,10 +61,26 @@ const connectClient = async () => {
       id BIGSERIAL PRIMARY KEY,
       name VARCHAR(100) UNIQUE,
       description TEXT,
+      rank INTEGER DEFAULT 1,
+      category VARCHAR(100) DEFAULT 'basic',
       created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP()
     )
     `
   )
+
+  // await client.query(
+  //   `
+  //   ALTER TABLE concept_topics
+  //   ADD COLUMN rank INTEGER DEFAULT 1
+  //   `
+  // )
+  
+  // await client.query(
+  //   `
+  //   ALTER TABLE concept_topics
+  //   ADD COLUMN category  VARCHAR(100) DEFAULT 'basic'
+  //   `
+  // )
   await client.query(
     `
     CREATE TABLE IF NOT EXISTS "concept_items" (

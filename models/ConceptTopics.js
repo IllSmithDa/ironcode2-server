@@ -57,7 +57,7 @@ class ConceptTopic{
     try {
       const query = {
         text: `
-          SELECT * FROM concept_topics
+          SELECT * FROM concept_topics ORDER BY category ASC, rank ASC
         `,
       }
       const res = await client.query(query);
@@ -71,14 +71,14 @@ class ConceptTopic{
     }
   }
 
-  static async updateTopic (name, description, id) {
+  static async updateTopic (name, description, id, rank, category) {
     try {
-      // console.log(typeof(description))
+      console.log(typeof(rank))
       const query = {
         text: `
-          UPDATE concept_topics SET name = $1, description = $2 WHERE id = $3
+          UPDATE concept_topics SET name = $1, description = $2, rank = $3, category = $4 WHERE id = $5
         `,
-        values: [name, description, id]
+        values: [name, description, rank, category, id]
       }
       await client.query(query);
 
