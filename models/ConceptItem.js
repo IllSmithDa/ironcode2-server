@@ -23,6 +23,7 @@ class ConceptItem {
   static async createConcept (conceptId, conceptName, text, language) {
     try {
       // console.log(text);
+      // https://stackoverflow.com/questions/58174695/prevent-sql-injection-with-nodejs-and-postgres
       const query = {
         text: ` INSERT INTO concept_items(concept_id, concept_name, text, language) VALUES($1, $2, $3, $4) RETURNING *
         `,
@@ -79,13 +80,17 @@ class ConceptItem {
       return { err: (err ).message, success: false }
     }
   }
+
+  // 
   static async getConceptsByLanguage (language) {
     try {
       const query = {
-        text: `SELECT * FROM concept_items WHERE language = $1  ORDER BY language`,
+        text: `
+          SELECT * FROM concept_items e FULL JOIN concept_topics d ON e.concept_id = d.id WHERE e.language = $1 ORDER BY d.category, d.rank`,
         values: [language]
       }
       const res = await client.query(query);
+      console.log(res.rows);
       return {
         data: res.rows,
         success: true, 
