@@ -38,6 +38,7 @@ const getLanguageById = async (req, res) => {
 const updateLanguage = async (req, res) => {
   try {
     const {id, name, description} = req.body;
+    console.log(name);
     const response = await Language.updateLanguage(id, name, description);
     if (response.success) {
       res.status(200).json({ success: true, data: response.data  })

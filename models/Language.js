@@ -70,10 +70,10 @@ class Language {
   }
   static async updateLanguage (id, name, description) {
     try {
-      // console.log('hello 2')
+      console.log(description)
       const query = {
         text: `
-          UPDATE languages SET name = $1, description = $2, WHERE id = $3
+          UPDATE languages SET name = $1, description = $2 WHERE id = $3
         `,
         values: [name, description, id]
       }
