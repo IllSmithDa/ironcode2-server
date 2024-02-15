@@ -48,7 +48,7 @@ class ConceptItem {
   }
   static async upodateConcept(id, concept_id, concept_name, text, language) {
     try {
-      // console.log(typeof(description))
+      console.log(id);
       const query = {
         text: `
           UPDATE concept_items SET text = $1, concept_id = $2, concept_name = $3, language = $4 WHERE id = $5
@@ -56,8 +56,6 @@ class ConceptItem {
         values: [text, concept_id, concept_name, language, id]
       }
       await client.query(query);
-
-      console.log('reached 3')
       return { success: true }
     } catch(err) {
       return { err: (err ).message, success: false }
