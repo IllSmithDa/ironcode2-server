@@ -118,8 +118,8 @@ const getConceptsByLanguage = async (req, res) => {
   }
 }
 
-const getConsceptsOnly = async (req, res) => {
-  const {language} = req.params;
+const consceptsOnly = async (req, res) => {
+  const {language} = req.body;
   try {
     const response = await ConceptItem.getConsceptsOnly(language);
     if (response.success) {
@@ -167,5 +167,5 @@ module.exports = {
   getConceptsByLanguage,
   getConceptsByTopicId,
   deleteConceptById,
-  getConsceptsOnly
+  consceptsOnly
 }
