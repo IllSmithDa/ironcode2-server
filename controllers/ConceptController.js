@@ -118,6 +118,18 @@ const getConceptsByLanguage = async (req, res) => {
   }
 }
 
+const getConsceptsOnly = async (req, res) => {
+  const {language} = req.params;
+  try {
+    const response = await ConceptItem.getConsceptsOnly(language);
+    if (response.success) {
+      res.status(200).json({ success: true, data: response.data  })
+    }
+  } catch (err) {
+    res.status(401).json({ err: (err).message })
+  }
+}
+
 const getConceptsByTopicId = async (req, res) => {
   const {topicId} = req.params;
   try {
@@ -154,5 +166,6 @@ module.exports = {
   getAllConceptItems,
   getConceptsByLanguage,
   getConceptsByTopicId,
-  deleteConceptById
+  deleteConceptById,
+  getConsceptsOnly
 }

@@ -48,7 +48,6 @@ class ConceptItem {
   }
   static async upodateConcept(id, concept_id, concept_name, text, language) {
     try {
-      console.log(id);
       const query = {
         text: `
           UPDATE concept_items SET text = $1, concept_id = $2, concept_name = $3, language = $4 WHERE id = $5
@@ -65,7 +64,7 @@ class ConceptItem {
     try {
       const query = {
         text: `
-          SELECT * FROM concept_items
+          SELECT * FROM concept_items WHERE language = $1
         `,
       }
       const res = await client.query(query);
@@ -79,7 +78,24 @@ class ConceptItem {
     }
   }
 
-  // 
+  static async getConsceptsOnly (language) {
+    try {
+      const query = {
+        text: `
+          SELECT * FROM concept_items WHERE language = $1`,
+        values: [language]
+      }
+      const res = await client.query(query);
+      console.log(res.rows);
+      return {
+        data: res.rows,
+        success: true, 
+      };
+    } catch {
+      return { err: 'could not retrieve comments', success: false};
+    }
+  }
+
   static async getConceptsByLanguage (language) {
     try {
       const query = {

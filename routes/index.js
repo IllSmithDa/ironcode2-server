@@ -36,6 +36,8 @@ module.exports = (server) => {
     .get(ConceptController.getAllConceptItems);
   server.route('/api/concept/by-language')
     .post(ConceptController.getConceptsByLanguage);
+  server.route('/api/concept/concept-only/:language')
+    .get(ConceptController.getConsceptsOnly);
   server.route('/api/concept/topic-id/:topicId')
     .get(ConceptController.getConceptsByTopicId);
   server.route('/api/concept/delete-id/:id')
