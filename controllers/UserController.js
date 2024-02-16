@@ -181,7 +181,7 @@ const loginUser = async (req, res, next) => {
   const hashedPassword =  user.data.password;
   const match = await comparePasswords(password, hashedPassword);
 
-  console.log(`is match: ${match}`)
+  // console.log(`is match: ${match}`)
 
   if(!match) {
     // req.session.destroy();
@@ -192,7 +192,7 @@ const loginUser = async (req, res, next) => {
   // next();
   // console.log(user.data.username);
   req.session.user = user.data.username;
-  console.log("test: " + req.session.user);
+  // console.log("test: " + req.session.user);
   // req.session.save((err) => console.log(err));
   res.status(200).send({
     id: user.data.id,

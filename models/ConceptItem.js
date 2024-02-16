@@ -22,7 +22,7 @@ class ConceptItem {
 
   static async createConcept (conceptId, conceptName, text, language) {
     try {
-      // console.log(text);
+      // // console.log(text);
       // https://stackoverflow.com/questions/58174695/prevent-sql-injection-with-nodejs-and-postgres
       const query = {
         text: ` INSERT INTO concept_items(concept_id, concept_name, text, language) VALUES($1, $2, $3, $4) RETURNING *
@@ -30,7 +30,7 @@ class ConceptItem {
         values: [conceptId, conceptName, text, language]
       }
       const res = await client.query(query);
-      // console.log(res);
+      // // console.log(res);
       if (res.rows) {
         return {
           data: res.rows[0],
@@ -42,7 +42,7 @@ class ConceptItem {
         }
       }
     } catch (err){
-      // console.log(err);
+      // // console.log(err);
       return { err: (err ), success: false };
     }
   }
@@ -68,7 +68,7 @@ class ConceptItem {
         `,
       }
       const res = await client.query(query);
-      // console.log(res?.rows);
+      // // console.log(res?.rows);
       return {
         data: res.rows,
         success: true
@@ -86,7 +86,7 @@ class ConceptItem {
         values: [language]
       }
       const res = await client.query(query);
-      console.log(res.rows);
+      // console.log(res.rows);
       return {
         data: res.rows,
         success: true, 
@@ -104,7 +104,7 @@ class ConceptItem {
         values: [language]
       }
       const res = await client.query(query);
-      console.log(res.rows);
+      // console.log(res.rows);
       return {
         data: res.rows,
         success: true, 

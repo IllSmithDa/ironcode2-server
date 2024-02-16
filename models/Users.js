@@ -225,7 +225,7 @@ class User {
         values: [username]
       }
       const res = await client.query(finduser);
-      console.log(res.rows[0])
+      // console.log(res.rows[0])
       let currentStrikes = Number(res.rows[0].strikes);
       currentStrikes += 1;
       if (currentStrikes === 10) isBanned = true;
