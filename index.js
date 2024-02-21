@@ -50,7 +50,8 @@ app.use(expressSession({
 // https://stackoverflow.com/questions/72224168/why-is-my-cookie-not-being-saved-on-safari-but-being-saved-on-chrome
 app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Cache-Control", "no-store,no-cache,must-revalidate");
+  // res.header("Cache-Control", "no-store,no-cache,must-revalidate");
+  res.header("Cache-Control", "public, max-age=31536000, immutable");
   res.header("Access-Control-Allow-Headers", ["Content-Type","X-Requested-With","X-HTTP-Method-Override","Accept"]);
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
   res.header("Access-Control-Allow-Credentials", true);
