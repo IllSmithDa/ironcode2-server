@@ -44,7 +44,7 @@ class ConceptTopic{
         values: [id]
       }
       const res = await client.query(query);
-      // console.log(res?.rows[0]);
+      console.log(res?.rows[0]);
       return {
         data: res.rows[0],
         success: true
@@ -61,7 +61,7 @@ class ConceptTopic{
         `,
       }
       const res = await client.query(query);
-      console.log(res?.rows);
+      // console.log(res?.rows);
       return {
         data: res.rows,
         success: true

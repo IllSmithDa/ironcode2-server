@@ -4,6 +4,8 @@ const bodyParser =  require('body-parser');
 const cors = require('cors');
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
+var compression = require('compression')
+
 
 const routes = require('./routes');
 const {client, connectClient} = require('./db')
@@ -14,10 +16,22 @@ const corsOptions = require('./corsOptions');
 connectClient();
 client.connect();
 
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+ 
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
+
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+app.use(compression({ filter: shouldCompress }))
 app.set("trust proxy", 1);
 
 

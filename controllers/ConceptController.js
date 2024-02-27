@@ -19,12 +19,15 @@ const postConceptTopic = async (req, res) => {
 const getTopicById = async (req, res) => {
   try {
     const {id} = req.params;
-    // console.log(id);
+    console.log(id);
     const response = await ConceptTopic.getTopicById(id);
+    console.log(response);
     if (response.success) {
       // console.log('jeo')
       // console.log(response.data);
       res.status(200).json({ success: true, data: response.data  })
+    } else {
+      res.status(400).json({ success: false , err: response.err })
     }
   } catch (err) {
     res.status(401).json({ err: (err ).message })

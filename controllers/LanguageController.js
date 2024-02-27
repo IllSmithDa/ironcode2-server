@@ -29,6 +29,8 @@ const getLanguageById = async (req, res) => {
     const response = await Language.getLanguageById(id);
     if (response.success) {
       res.status(200).json({ success: true, data: response.data  })
+    } else {
+      res.status(400).json({ success: false , err: response.err })
     }
   } catch (err) {
     res.status(401).json({ err: (err ).message })
