@@ -1,3 +1,4 @@
+const expressGraphQL = require('express-graphql').graphqlHTTP;
 const ConceptController = require('../controllers/ConceptController');
 const LanguageController = require('../controllers/LanguageController');
 const UserController = require('../controllers/UserController');
@@ -10,6 +11,10 @@ module.exports = (server) => {
     .get(LanguageController.getAllLanguages);
   server.route('/api/language/by-id/:id')
     .get(LanguageController.getLanguageById);
+  // server.use('/api/language/by-id/:id', expressGraphQL({
+  //   schema: LanguageController.getLanguageById,
+  //   graphiql: true,
+  // }))
   server.route('/api/language/update')
     .put(LanguageController.updateLanguage);
   server.route('/api/language/delete-id/:id')
@@ -18,8 +23,12 @@ module.exports = (server) => {
    
   server.route('/api/concept/create-topic')
     .post(ConceptController.postConceptTopic);
-  server.route('/api/concept/all-topics')
-    .get(ConceptController.getAllTopics);
+  // server.route('/api/concept/all-topics')
+  //   .get(ConceptController.getAllTopics);
+  server.use('/api/concept/all-topics', expressGraphQL({
+    schema: ConceptController.getAllTopics,
+    graphiql: true,
+  }))
   server.route('/api/concept/topic-object/:id')
     .get(ConceptController.getTopicById);
   server.route('/api/concept/update-topic')

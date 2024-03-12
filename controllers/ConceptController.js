@@ -1,3 +1,4 @@
+const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLInt, GraphQLString} = require('graphql');
 const { ConceptItem } = require("../models/ConceptItem");
 const { ConceptTopic } = require("../models/ConceptTopics");
 
@@ -34,16 +35,51 @@ const getTopicById = async (req, res) => {
   }
 }
 
-const getAllTopics = async (req, res) => {
-  try {
-    const response = await ConceptTopic.getAllTopics();
-    if (response.success) {
-      res.status(200).json({ success: true, data: response.data  })
-    }
-  } catch (err) {
-    res.status(401).json({ err: (err ).message })
-  }
-}
+// const getAllTopics = async (req, res) => {
+//   try {
+//     const response = await ConceptTopic.getAllTopics();
+//     if (response.success) {
+//       res.status(200).json({ success: true, data: response.data  })
+//     }
+//   } catch (err) {
+//     res.status(401).json({ err: (err ).message })
+//   }
+// }
+/*
+      id BIGSERIAL PRIMARY KEY,
+      name VARCHAR(100) UNIQUE,
+      description TEXT,
+      rank INTEGER DEFAULT 1,
+      category VARCHAR(100) DEFAULT 'basic',
+      created_at
+      */
+
+const TopicType = new GraphQLObjectType({
+  name: 'Topic',
+  description: 'Concept topic',
+  fields: (() => ({
+    id: { type: GraphQLNonNull(GraphQLString) },
+    name: { type: GraphQLNonNull(GraphQLString)},
+    description: {type: GraphQLString},
+    rank: {type: GraphQLNonNull(GraphQLInt)},
+    category: { type: GraphQLNonNull(GraphQLString)},
+    created_at: {type: GraphQLNonNull(GraphQLString)}
+  }))
+})
+    
+const getAllTopics = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'GetAllTopics',
+    description: 'All Concept topics query',
+    fields: () => ({
+      topics: {
+        type: new GraphQLList(TopicType),
+        description: 'list of all concept topics',
+        resolve: async () => await ConceptTopic.getAllTopics()
+      }
+    })
+  })
+})
 
 const updateTopic = async (req, res) => {
   try {
@@ -153,7 +189,7 @@ const deleteConceptById = async (req, res) => {
     if (response.success) {
       res.status(200).json({ success: true })
     }
-  } catch (err) {
+  } catch (err) {t
     res.status(401).json({ err: (err).message })
   }
 }

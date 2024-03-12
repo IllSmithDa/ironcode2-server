@@ -62,10 +62,11 @@ class ConceptTopic{
       }
       const res = await client.query(query);
       // console.log(res?.rows);
-      return {
-        data: res.rows,
-        success: true
-      }
+      // return {
+      //   data: res.rows,
+      //   success: true
+      // }
+      return res.rows;
     } catch (err) {
       return { err: (err ).message, success: false }
     }
