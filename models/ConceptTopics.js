@@ -62,6 +62,24 @@ class ConceptTopic{
       }
       const res = await client.query(query);
       // console.log(res?.rows);
+      return {
+        data: res.rows,
+        success: true
+      }
+    } catch (err) {
+      return { err: (err ).message, success: false }
+    }
+  }
+
+  static async getAllTestTopics () {
+    try {
+      const query = {
+        text: `
+          SELECT * FROM concept_topics ORDER BY category ASC, rank ASC
+        `,
+      }
+      const res = await client.query(query);
+      // console.log(res?.rows);
       // return {
       //   data: res.rows,
       //   success: true

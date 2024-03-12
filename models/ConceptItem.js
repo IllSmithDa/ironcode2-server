@@ -129,7 +129,7 @@ class ConceptItem {
     }
   }
 
-  static async deleteConceptById(id) {
+  static async deleteConceptEntryById(id) {
     try {
       const query = {
         text: `

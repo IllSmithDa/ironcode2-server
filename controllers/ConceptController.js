@@ -35,24 +35,16 @@ const getTopicById = async (req, res) => {
   }
 }
 
-// const getAllTopics = async (req, res) => {
-//   try {
-//     const response = await ConceptTopic.getAllTopics();
-//     if (response.success) {
-//       res.status(200).json({ success: true, data: response.data  })
-//     }
-//   } catch (err) {
-//     res.status(401).json({ err: (err ).message })
-//   }
-// }
-/*
-      id BIGSERIAL PRIMARY KEY,
-      name VARCHAR(100) UNIQUE,
-      description TEXT,
-      rank INTEGER DEFAULT 1,
-      category VARCHAR(100) DEFAULT 'basic',
-      created_at
-      */
+const getAllTopics = async (req, res) => {
+  try {
+    const response = await ConceptTopic.getAllTopics();
+    if (response.success) {
+      res.status(200).json({ success: true, data: response.data  })
+    }
+  } catch (err) {
+    res.status(401).json({ err: (err ).message })
+  }
+}
 
 const TopicType = new GraphQLObjectType({
   name: 'Topic',
@@ -67,7 +59,7 @@ const TopicType = new GraphQLObjectType({
   }))
 })
     
-const getAllTopics = new GraphQLSchema({
+const getAllTestTopics = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'GetAllTopics',
     description: 'All Concept topics query',
@@ -109,7 +101,7 @@ const deleteTopic = async (req, res) => {
 // concept items routes 
 
 
-const postConceptItem = async (req, res) => {
+const postConceptforLanguageEntry = async (req, res) => {
   const {conceptId, conceptName, text, language} = req.body;
 
   try {
@@ -122,7 +114,7 @@ const postConceptItem = async (req, res) => {
   }
 }
 
-const updateConceptItem = async (req, res) => {
+const updateConceptForLanguageEntry = async (req, res) => {
   const {id, concept_id, concept_name, text, language} = req.body;
   try {
     const response = await ConceptItem.upodateConcept(id, concept_id, concept_name, text, language);
@@ -134,7 +126,7 @@ const updateConceptItem = async (req, res) => {
   }
 }
 
-const getAllConceptItems = async (req, res) => {
+const getAllConceptEntries = async (req, res) => {
   try {
     const response = await ConceptItem.getAllConceptItems();
     if (response.success) {
@@ -182,14 +174,14 @@ const getConceptsByTopicId = async (req, res) => {
 }
 
 
-const deleteConceptById = async (req, res) => {
+const deleteConceptEntryById = async (req, res) => {
   const {id} = req.params;
   try {
-    const response = await ConceptItem.deleteConceptById(id);
+    const response = await ConceptItem.deleteConceptEntryById(id);
     if (response.success) {
       res.status(200).json({ success: true })
     }
-  } catch (err) {t
+  } catch (err) {
     res.status(401).json({ err: (err).message })
   }
 }
@@ -198,13 +190,14 @@ module.exports = {
   postConceptTopic,
   getTopicById,
   getAllTopics,
+  getAllTestTopics,
   updateTopic,
   deleteTopic,
-  postConceptItem,
-  updateConceptItem,
-  getAllConceptItems,
+  postConceptforLanguageEntry,
+  updateConceptForLanguageEntry,
+  getAllConceptEntries,
   getConceptsByLanguage,
   getConceptsByTopicId,
-  deleteConceptById,
+  deleteConceptEntryById,
   consceptsOnly
 }
