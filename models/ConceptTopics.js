@@ -44,7 +44,6 @@ class ConceptTopic{
         values: [id]
       }
       const res = await client.query(query);
-      console.log(res?.rows[0]);
       return {
         data: res.rows[0],
         success: true
@@ -53,6 +52,22 @@ class ConceptTopic{
       return { err: (err ).message, success: false }
     }
   }
+  
+  static async getTestTopicById (id) {
+    try {
+      const query = {
+        text: `
+          SELECT * FROM concept_topics WHERE id = $1
+        `,
+        values: [id]
+      }
+      const res = await client.query(query);
+      return res.rows[0];
+    } catch (err) {
+      return { err: (err ).message, success: false }
+    }
+  }
+
   static async getAllTopics () {
     try {
       const query = {

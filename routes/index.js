@@ -66,7 +66,13 @@ module.exports = (server) => {
 
   // graphQL versions of routes
   server.use('/api/concept/all-test-topics', expressGraphQL({
-    schema: ConceptController.getAllTopics,
+    schema: ConceptController.getAllTestTopics,
+    graphiql: true,
+  }))
+
+  // graphql verstion of topicId
+  server.use('/api/concept/test-get-topic/', expressGraphQL({
+    schema: ConceptController.testGetTopicById,
     graphiql: true,
   }))
 

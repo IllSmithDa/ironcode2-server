@@ -2,6 +2,19 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLNonNull, GraphQLIn
 const { ConceptItem } = require("../models/ConceptItem");
 const { ConceptTopic } = require("../models/ConceptTopics");
 
+const TopicType = new GraphQLObjectType({
+  name: 'Topic',
+  description: 'Concept topic',
+  fields: (() => ({
+    id: { type: GraphQLNonNull(GraphQLString) },
+    name: { type: GraphQLNonNull(GraphQLString)},
+    description: {type: GraphQLString},
+    rank: {type: GraphQLNonNull(GraphQLInt)},
+    category: { type: GraphQLNonNull(GraphQLString)},
+    created_at: {type: GraphQLNonNull(GraphQLString)}
+  }))
+})
+
 
 // all concept topics
 const postConceptTopic = async (req, res) => {
@@ -35,6 +48,23 @@ const getTopicById = async (req, res) => {
   }
 }
 
+const testGetTopicById = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'TestTopicsById',
+    description: 'All Concept topics by Id',
+    fields: () => ({
+      topic: {
+        type: TopicType,
+        description: 'list of all concept topics',
+        args: {
+          id: { type: GraphQLString }
+        },
+        resolve: async (parent, args) => await ConceptTopic.getTestTopicById(args.id)
+      }
+    })
+  })
+})
+
 const getAllTopics = async (req, res) => {
   try {
     const response = await ConceptTopic.getAllTopics();
@@ -46,18 +76,6 @@ const getAllTopics = async (req, res) => {
   }
 }
 
-const TopicType = new GraphQLObjectType({
-  name: 'Topic',
-  description: 'Concept topic',
-  fields: (() => ({
-    id: { type: GraphQLNonNull(GraphQLString) },
-    name: { type: GraphQLNonNull(GraphQLString)},
-    description: {type: GraphQLString},
-    rank: {type: GraphQLNonNull(GraphQLInt)},
-    category: { type: GraphQLNonNull(GraphQLString)},
-    created_at: {type: GraphQLNonNull(GraphQLString)}
-  }))
-})
     
 const getAllTestTopics = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -199,5 +217,6 @@ module.exports = {
   getConceptsByLanguage,
   getConceptsByTopicId,
   deleteConceptEntryById,
-  consceptsOnly
+  consceptsOnly,
+  testGetTopicById,
 }
